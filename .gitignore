@@ -1,0 +1,6 @@
+*.csv
+*.rds
+*.png
+*.pdf
+output/
+__pycache__/
