@@ -16,11 +16,11 @@ The manuscript is original, is not under consideration elsewhere, and follows a 
 
 We suggest the following potential reviewers, all without conflicts of interest with the authors:
 
-1. Graciela Muniz-Terrera, PhD — Edinburgh Dementia Prevention, University of Edinburgh, UK. Expertise: multi-state models of cognitive ageing and dementia transitions. (Institutional email / ORCID to be added by the authors.)
-2. Sarah T. Pendlebury, FRCP, DPhil — Wolfson Centre for Prevention of Stroke and Dementia, University of Oxford, UK. Expertise: post-stroke cognitive impairment and dementia. ORCID: 0000-0003-3603-8388.
-3. Fiona E. Matthews, PhD — Population Health Sciences Institute, Newcastle University, UK. Expertise: multi-state modelling and cognitive epidemiology (CFAS). (Institutional email / ORCID to be added by the authors.)
-4. Longfei Jia, MD, PhD — Xuanwu Hospital, Capital Medical University, Beijing, China. Expertise: national dementia and MCI epidemiology in China. (Institutional email to be added by the authors.)
-5. Annie Robitaille, PhD — Université du Québec à Montréal, Canada. Expertise: multi-state cognitive transition models across longitudinal cohorts. (Institutional email to be added by the authors.)
+1. Graciela Muniz-Terrera, PhD — Edinburgh Dementia Prevention, University of Edinburgh, UK. Expertise: multi-state models of cognitive ageing and dementia transitions. Email: g.muniz@ed.ac.uk
+2. Sarah T. Pendlebury, FRCP, DPhil — Wolfson Centre for Prevention of Stroke and Dementia, University of Oxford, UK. Expertise: post-stroke cognitive impairment and dementia. Email: sarah.pendlebury@ndcn.ox.ac.uk; ORCID: 0000-0003-3603-8388.
+3. Fiona E. Matthews, PhD — University of Hull, UK (formerly Population Health Sciences Institute, Newcastle University). Expertise: multi-state modelling and cognitive epidemiology (CFAS). Email: F.Matthews@hull.ac.uk
+4. Longfei Jia, MD, PhD — Xuanwu Hospital, Capital Medical University, Beijing, China. Expertise: national dementia and MCI epidemiology in China. Email: jialongfei@163.com
+5. Annie Robitaille, PhD — Interdisciplinary School of Health Sciences, University of Ottawa, Canada. Expertise: multi-state cognitive transition models across longitudinal cohorts. Email: arobitai@uOttawa.ca
 
 We have no conflicts of interest to declare.
 
