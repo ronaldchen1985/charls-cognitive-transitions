@@ -227,6 +227,19 @@ s5 = [["Main 2018 classification", "With animal naming: Normal",
       ["CIND", "185", "4,203", "24"],
       ["Dementia", "0", "29", "857"]]
 
+# S6: formal between-transition Wald tests (stage-dependence check)
+s6 = [["Baseline state", "Exposure", "Contrast", "Δ log-RRR (SE)", "z", "p", "p (BH-adj.)"]]
+with open(os.path.join(OUT, "interaction_tests.csv"), encoding="utf-8-sig") as f:
+    for r in csv.DictReader(f):
+        exp = {"stroke181": "Prevalent stroke", "stroke_inc1": "Incident stroke",
+               "cesd101": "Depressive symptoms"}[r["covariate"]]
+        pv = float(r["p"]); pb = float(r["p_BH"])
+        s6.append([r["stratum"], exp, r["contrast"],
+                   f"{float(r['d_logRRR']):.2f} ({float(r['se']):.2f})",
+                   f"{float(r['z']):.2f}",
+                   "<0.001" if pv < 0.001 else f"{pv:.3f}",
+                   "<0.001" if pb < 0.001 else f"{pb:.3f}"])
+
 supp["sections"] = [
     {"heading": "Supplementary Table S1. Sensitivity to the IQCODE dementia cut-off: adjusted stroke RRRs under cut-offs 3.48 and 3.9 (main analysis: 3.6)",
      "table": s1},
@@ -244,6 +257,8 @@ supp["sections"] = [
      "table": s4},
     {"heading": "Supplementary Table S5. Cross-wave equivalence of the language domain: 2018 cognitive-state re-classification with animal naming included (columns) vs the main classification (rows). n = 10,583 classifiable under both definitions; raw agreement 96.2%; Cohen's \u03ba = 0.933",
      "table": s5},
+    {"heading": "Supplementary Table S6. Formal between-transition Wald tests: difference in exposure log-RRRs between progression to dementia and CIND onset (Normal stratum) or reversion (CIND stratum), with Benjamini\u2013Hochberg adjustment across the six contrasts",
+     "table": s6},
 ]
 supp["figure"] = {"path": os.path.join(SUB, "figures", "figS1_gof.png"),
                   "legend": ("Supplementary Figure S1. Goodness of fit: observed (points) vs "
