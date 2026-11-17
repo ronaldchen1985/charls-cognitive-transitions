@@ -16,3 +16,18 @@
 - 主分析：`code/analysis_msm2.R`（空模型）, `code/analysis_multinom.R`（RRR）, `code/sens_cutoffs.py` + `code/sens_multinom.R`（敏感性）
 - 结果：`output/null_model_results.txt`, `output/multinom_rrr.csv`, `output/run_sens.log`, `output/table1_baseline.csv`
 - 图：`output/fig1_transition_diagram.png`, `output/fig2_forest_stroke.png`
+
+---
+
+## 第二轮补记（2026-11-17，审稿后修订）
+
+9. **基线样本量更正**：2018 访谈且 ≥60 岁 = **11,039**（非 11,043），不可分类 = **411**（非 415），排除 <60 岁 = 9,774。正文、流程图（fig1）已同步更正。原 11,043 为早期手工记录误差，build_report.txt 复核值为准。
+10. **amendment 7 更正**：msm 空模型实际拟合于全分析面板 n=9,679（非 8,178）；8,178 仅为多项 logit 完整病例样本。
+11. **amendment 8 更正**：误分类校正 msm **尝试过但不可识别**（两波面板，模型不收敛，见 run_misclass.log），并非"未执行"；已在正文 Limitations 第二条如实说明。
+12. **SAP 未执行项如实登记**：SAP §4 敏感性 2（ADL 支柱版痴呆定义）与敏感性 3（informant 报告诊断敏感性）未执行——ADL 支柱已部分由 proxy 规则覆盖，informant 自报诊断与算法分类数据源重叠、增量有限；列为审稿期备选。
+13. **SAP §5 协变量 residence 未构建**：城乡/居住变量在 SAP 中列出但数据构建阶段未生成（covariates.csv 无此列）；其与教育、户口高度相关，且非核心血管/心理社会变量，未纳入任何模型。
+14. **语言域跨波等价性敏感性（SAP §4.1 预指定项）已执行**：`code/sens_language_domain.py`，2018 主分类 vs 含动物命名重分类，n=10,583 双重可分类，一致率 96.2%，Cohen's κ = 0.933（output/sens_language_domain.txt）。结果写入正文稳健性小节与 Supplementary Table S5。
+15. **Table 2 分母改全分析面板**：观察转移矩阵由完整病例（n=8,178）改为全分析面板（n=9,679，analytic_panel.csv 每人首末行）；CIND→Normal 观察逆转率相应由 49.3% 更正为 45.4%，摘要、正文、fig4 同步更新。多项 logit 仍基于 8,178 完整病例。
+16. **Table 1 删除吸烟行**：da059（ever smoked）仅 2018 刷新样本应答（分析样本缺失 38.5%，结构性缺失），从描述表删除并在 Methods 与表注说明；该变量从未进入任何模型，分析结论不受影响。
+17. **多项 logit 完全分离行处理**：stroke_inc1→Death 三行 RRR=0 / 上界 0 或 1.6e139（幸存者结构所致的完全分离），Table 4 统一标注 "not estimable (complete separation)"。
+18. **代理规则分类构成**：2018 年代理规则分类占 30.6%（3,257/10,628），W6 占 17.7%（1,552/8,790），双源两波完整 n=5,649——已写入正文。双源子样本全模型重估列入 P1 备选计划，本轮未执行。

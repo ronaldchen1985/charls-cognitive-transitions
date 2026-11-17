@@ -43,7 +43,7 @@ def save_pub(fig, name, multi=False):
     plt.close(fig)
     print(name, "saved")
 
-C = {"Normal": "#4C9F70", "CIND": "#E8A33D", "Dementia": "#C0392B", "Death": "#5D6D7E"}
+C = {"Normal": "#009E73", "CIND": "#E69F00", "Dementia": "#D55E00", "Death": "#7F7F7F"}
 
 # ============ Figure 1: STROBE flowchart ============
 fig, ax = plt.subplots(figsize=(7.2, 6.0))
@@ -56,10 +56,10 @@ def earrow(x1, y1, x2, y2):
     ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>",
                                  mutation_scale=12, color="#2E4053", lw=1.0))
 box(1.6, 8.6, 4.2, 1.1, "CHARLS wave 4 (2018)\ninterviewed, n = 20,813")
-box(1.6, 6.8, 4.2, 1.1, "Aged \u2265 60 years at 2018 interview\nn = 11,043")
-box(6.6, 6.8, 3.0, 1.1, "Excluded: age < 60\nn = 9,770", fc="#FBEEE6")
+box(1.6, 6.8, 4.2, 1.1, "Aged \u2265 60 years at 2018 interview\nn = 11,039")
+box(6.6, 6.8, 3.0, 1.1, "Excluded: age < 60\nn = 9,774", fc="#FBEEE6")
 box(1.6, 5.0, 4.2, 1.1, "Classifiable 2018 cognitive state\nn = 10,628")
-box(6.6, 5.0, 3.0, 1.1, "Unclassifiable 2018 state\nn = 415", fc="#FBEEE6")
+box(6.6, 5.0, 3.0, 1.1, "Unclassifiable 2018 state\nn = 411", fc="#FBEEE6")
 box(1.6, 3.2, 4.2, 1.1, "Analysis panel: wave-6 outcome\nor death record, n = 9,679")
 box(6.6, 3.2, 3.0, 1.1, "Lost to follow-up\nn = 949 (8.9%)", fc="#FBEEE6")
 box(1.6, 1.4, 4.2, 1.1, "Complete-case sample for adjusted\nmultinomial models, n = 8,178")
@@ -143,8 +143,8 @@ states = ["Normal", "CIND", "Dementia", "Death"]
 colors = [C[s] for s in states]
 model5 = {"Normal": [54.4, 29.5, 4.0, 12.0], "CIND": [47.2, 30.9, 5.5, 16.3],
           "Dementia": [23.4, 20.4, 9.0, 47.2]}
-observed = {"Normal": [62.2, 27.9, 2.8, 7.1], "CIND": [49.3, 37.3, 4.6, 8.8],
-            "Dementia": [29.7, 32.3, 17.1, 21.0]}
+observed = {"Normal": [60.7, 28.5, 3.0, 7.7], "CIND": [45.4, 37.2, 6.3, 11.1],
+            "Dementia": [18.1, 23.5, 18.7, 39.7]}
 fig, axes = plt.subplots(1, 3, figsize=(8.6, 3.9), sharey=True)
 for ax, base in zip(axes, ["Normal", "CIND", "Dementia"]):
     for j, (vals, hatch) in enumerate([(model5[base], ""), (observed[base], "")]):

@@ -50,14 +50,16 @@ main = {"title": ("Cognitive state transitions and the stage-dependent role of s
         "blocks": parse_md(os.path.join(ROOT, "manuscript", "manuscript.md"),
                            stop_at="## Tables")}
 
-# Table 1
+# Table 1 (smoking item dropped: only administered to the 2018 refreshment
+# sample, 38.5% missing in the analysis sample -- see Methods)
 t1 = read_csv(os.path.join(OUT, "table1_baseline.csv"))
+t1 = [r for r in t1 if not r[0].startswith("Ever smoked")]
 t1[0] = ["Characteristic", "Normal cognition (n = 5,319)", "CIND (n = 4,423)", "Dementia (n = 886)"]
 main["table1"] = t1
 
-# Table 2: observed transitions (counts and row %)
-counts = {"Normal": [2740, 1227, 123, 314], "CIND": [1673, 1265, 155, 300],
-          "Dementia": [113, 123, 65, 80]}
+# Table 2: observed transitions, full analysis panel (n = 9,679)
+counts = {"Normal": [2937, 1381, 147, 374], "CIND": [1828, 1497, 253, 449],
+          "Dementia": [147, 191, 152, 323]}
 t2 = [["2018 state", "N", "W6: Normal, n (%)", "W6: CIND, n (%)",
        "W6: Dementia, n (%)", "W6: Death, n (%)"]]
 for k, v in counts.items():
@@ -85,12 +87,13 @@ t4 = [["Baseline state", "W6 outcome", "Covariate", "RRR (95% CI)", "P"]]
 with open(os.path.join(OUT, "multinom_rrr.csv"), encoding="utf-8-sig") as f:
     for r in csv.DictReader(f):
         rrr, lo, up = float(r["RRR"]), float(r["L"]), float(r["U"])
-        if up > 1e6:
-            est = "not estimable (no events)"
+        if up > 1e6 or rrr == 0 or up == 0:
+            est = "not estimable (complete separation)"
+            ps = "\u2014"
         else:
             est = f"{rrr:.2f} ({lo:.2f}\u2013{up:.2f})"
-        pv = float(r["p"])
-        ps = "<0.001" if pv < 0.001 else f"{pv:.3f}"
+            pv = float(r["p"])
+            ps = "<0.001" if pv < 0.001 else f"{pv:.3f}"
         t4.append([r["baseline"], r["outcome"], covlab.get(r["covariate"], r["covariate"]), est, ps])
 main["table4"] = t4
 
@@ -216,6 +219,14 @@ for k, cc in cc_rows.items():
     s4.append([b, o, "Prevalent stroke (2018)" if cov == "stroke181" else "Incident stroke (2018\u2013W6)",
                cc, mi_rows[k]])
 
+# S5: cross-wave language-domain equivalence (2018 re-classification including
+# animal naming vs main classification; output/sens_language_domain.txt)
+s5 = [["Main 2018 classification", "With animal naming: Normal",
+       "With animal naming: CIND", "With animal naming: Dementia"],
+      ["Normal", "5,117", "127", "41"],
+      ["CIND", "185", "4,203", "24"],
+      ["Dementia", "0", "29", "857"]]
+
 supp["sections"] = [
     {"heading": "Supplementary Table S1. Sensitivity to the IQCODE dementia cut-off: adjusted stroke RRRs under cut-offs 3.48 and 3.9 (main analysis: 3.6)",
      "table": s1},
@@ -231,6 +242,8 @@ supp["sections"] = [
      "table": s3d},
     {"heading": "Supplementary Table S4. Multiple-imputation (m = 20) sensitivity: pooled stroke RRRs vs complete-case estimates",
      "table": s4},
+    {"heading": "Supplementary Table S5. Cross-wave equivalence of the language domain: 2018 cognitive-state re-classification with animal naming included (columns) vs the main classification (rows). n = 10,583 classifiable under both definitions; raw agreement 96.2%; Cohen's \u03ba = 0.933",
+     "table": s5},
 ]
 supp["figure"] = {"path": os.path.join(SUB, "figures", "figS1_gof.png"),
                   "legend": ("Supplementary Figure S1. Goodness of fit: observed (points) vs "
@@ -238,7 +251,11 @@ supp["figure"] = {"path": os.path.join(SUB, "figures", "figS1_gof.png"),
                              "continuous-time Markov null model (n = 9,679). Death is excluded "
                              "from the comparison because death times were interval-midpoint "
                              "imputed, making the modelled death-time distribution uninformative "
-                             "for fit assessment."),
+                             "for fit assessment. Observed points at later times are based only "
+                             "on participants already interviewed by then (the denominator "
+                             "shrinks as wave-6 interviews accrued in 2021\u20132023); comparisons "
+                             "within the fully accrued window (t \u2264 2.8 years) are the most "
+                             "informative."),
                   "w": 520, "h": 358}
 with open(os.path.join(SUB, "content_supp.json"), "w", encoding="utf-8") as f:
     json.dump(supp, f, ensure_ascii=False, indent=1)
