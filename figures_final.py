@@ -98,40 +98,45 @@ ax.set_xlim(-0.02, 0.85); ax.set_ylim(0.08, 0.95); ax.axis("off")
 ax.set_title("Annual transition intensities (per person-year), CHARLS 2018\u20132023", fontsize=11)
 save_pub(fig, "fig2_transition_diagram")
 
-# ============ Figure 3: forest plot of stroke RRRs ============
+# ============ Figure 3: forest plots of stroke RRRs (two panels) ============
 rr = pd.read_csv(os.path.join(OUT, "multinom_rrr.csv"))
 key = rr[rr["covariate"].isin(["stroke181", "stroke_inc1"])].copy()
-key["Exposure"] = key["covariate"].map({"stroke181": "Prevalent stroke (2018)",
-                                        "stroke_inc1": "Incident stroke (2018\u2013W6)"})
 key["Transition"] = key["baseline"] + " \u2192 " + key["outcome"]
 key = key[(key["U"] < 1e6) & (key["RRR"] > 0)]
 order = [("Normal","CIND"),("Normal","Dementia"),("Normal","Death"),
          ("CIND","Normal"),("CIND","Dementia"),("CIND","Death"),
          ("Dementia","Normal"),("Dementia","CIND"),("Dementia","Death")]
-key["ord"] = key.apply(lambda r: order.index((r["baseline"], r["outcome"]))*2
-                       + (0 if r["covariate"] == "stroke181" else 1), axis=1)
-key = key.sort_values("ord", ascending=False).reset_index(drop=True)
-fig, ax = plt.subplots(figsize=(7.4, 5.4))
-cols = {"Prevalent stroke (2018)": "#2E5E8C", "Incident stroke (2018\u2013W6)": "#C0392B"}
-ypos = np.arange(len(key)) * 1.0
-for y, (_, r) in zip(ypos, key.iterrows()):
-    c = cols[r["Exposure"]]
-    ax.plot([r["L"], r["U"]], [y, y], color=c, lw=1.8, solid_capstyle="round", zorder=2)
-    ax.plot(r["RRR"], y, "o", color=c, ms=6.5, mec="white", mew=1.0, zorder=3)
-    ax.text(24, y, f'{r["RRR"]+1e-9:.2f} ({r["L"]+1e-9:.2f}\u2013{r["U"]+1e-9:.2f})',
-            va="center", fontsize=7.5, color="#1B2631")
-ax.axvline(1, ls="--", color="grey", lw=0.9)
-ax.set_yticks(ypos)
-ax.set_yticklabels(key["Transition"] + "  |  " + key["Exposure"], fontsize=8)
-ax.set_xscale("log"); ax.set_xlim(0.05, 20)
-ax.set_xticks([0.1, 0.25, 0.5, 1, 2, 4, 8, 16])
-ax.set_xticklabels(["0.1", "0.25", "0.5", "1", "2", "4", "8", "16"], fontsize=8)
-ax.set_xlabel("Adjusted relative risk ratio (log scale)", fontsize=9)
-ax.text(24, len(key)-0.2, "RRR (95% CI)", fontsize=8, fontweight="bold")
-ax.grid(axis="x", color="#EAECEE", lw=0.6, zorder=0)
-ax.set_title("Associations of stroke with cognitive-state transitions, by baseline state",
-             fontsize=10.5, pad=10)
-save_pub(fig, "fig3_forest_stroke")
+key["ord"] = key.apply(lambda r: order.index((r["baseline"], r["outcome"])), axis=1)
+panels = [("a", "stroke181", "Prevalent stroke (baseline 2018)", "#2E5E8C"),
+          ("b", "stroke_inc1", "Incident stroke (follow-up survivors)", "#C0392B")]
+fig, axes = plt.subplots(1, 2, figsize=(9.4, 4.6))
+for ax, (letter, cov, title, col) in zip(axes, panels):
+    d = key[key["covariate"] == cov].sort_values("ord", ascending=False).reset_index(drop=True)
+    ypos = np.arange(len(d)) * 1.0
+    for y, (_, r) in zip(ypos, d.iterrows()):
+        sig = (r["L"] > 1) or (r["U"] < 1)
+        ax.plot([r["L"], r["U"]], [y, y], color=col, lw=1.8,
+                alpha=1.0 if sig else 0.45, solid_capstyle="round", zorder=2)
+        ax.plot(r["RRR"], y, "o", color=col, ms=6.5, mec="white", mew=1.0,
+                alpha=1.0 if sig else 0.45, zorder=3)
+        ax.text(26, y, f'{r["RRR"]+1e-9:.2f} ({r["L"]+1e-9:.2f}\u2013{r["U"]+1e-9:.2f})',
+                va="center", fontsize=7.5, color="#1B2631" if sig else "#7B8794")
+    ax.axvline(1, ls="--", color="grey", lw=0.9)
+    ax.set_yticks(ypos)
+    ax.set_yticklabels(d["Transition"], fontsize=8.5)
+    ax.set_ylim(-0.7, len(d) + 0.55)
+    ax.set_xscale("log"); ax.set_xlim(0.05, 55)
+    ax.set_xticks([0.1, 0.25, 0.5, 1, 2, 4, 8, 16])
+    ax.set_xticklabels(["0.1", "0.25", "0.5", "1", "2", "4", "8", "16"], fontsize=8)
+    ax.set_xlabel("Adjusted RRR (log scale)", fontsize=9)
+    ax.text(26, len(d) + 0.18, "RRR (95% CI)", fontsize=8, fontweight="bold")
+    ax.grid(axis="x", color="#EAECEE", lw=0.6, zorder=0)
+    ax.set_title(f"{letter}   {title}", fontsize=10, loc="left", pad=8,
+                 fontweight="bold", color=col)
+fig.suptitle("Associations of stroke with cognitive-state transitions, by baseline state",
+             fontsize=10.5, y=1.00)
+fig.tight_layout(rect=[0, 0, 1, 0.96])
+save_pub(fig, "fig3_forest_stroke", multi=True)
 
 # ============ Figure 4: 5-year probabilities vs observed (multi-panel) ============
 states = ["Normal", "CIND", "Dementia", "Death"]

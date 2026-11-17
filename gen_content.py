@@ -43,9 +43,9 @@ def read_csv(path):
         return list(csv.reader(f))
 
 # ---------- main manuscript ----------
-main = {"title": ("Transitions between normal cognition, cognitive impairment no "
-                  "dementia, dementia, and death in Chinese older adults: a multi-state "
-                  "analysis of the CHARLS 2018\u20132023 cohort with a focus on stroke"),
+main = {"title": ("Cognitive state transitions and the stage-dependent role of stroke "
+                  "in older Chinese adults: a multi-state analysis of CHARLS "
+                  "2018\u20132023"),
         "running": "Cognitive state transitions and stroke in CHARLS",
         "blocks": parse_md(os.path.join(ROOT, "manuscript", "manuscript.md"),
                            stop_at="## Tables")}
@@ -95,7 +95,7 @@ with open(os.path.join(OUT, "multinom_rrr.csv"), encoding="utf-8-sig") as f:
 main["table4"] = t4
 
 main["figures"] = [
-    {"path": os.path.join(SUB, "figures", "fig0_flowchart.png"),
+    {"path": os.path.join(SUB, "figures", "fig1_flowchart.png"),
      "legend": ("Figure 1 (STROBE flow diagram). Derivation of the analysis samples. "
                 "The continuous-time multi-state model was fitted on the analysis panel "
                 "(n = 9,679); adjusted multinomial models used the complete-case sample "
@@ -107,11 +107,15 @@ main["figures"] = [
                 "(full analysis panel, n = 9,679)."),
      "w": 520, "h": 349},
     {"path": os.path.join(SUB, "figures", "fig3_forest_stroke.png"),
-     "legend": ("Figure 3. Adjusted relative risk ratios (RRRs) for prevalent (2018) and incident "
-                "(2018\u2013W6) stroke on each cognitive-state transition, from baseline-state-"
-                "stratified multinomial models (complete-case sample, n = 8,178). Transitions with "
-                "no events are not shown (not estimable)."),
-     "w": 560, "h": 409},
+     "legend": ("Figure 3. Adjusted relative risk ratios (RRRs) for stroke on each "
+                "cognitive-state transition, from baseline-state-stratified multinomial "
+                "models (complete-case sample, n = 8,178). (a) Prevalent stroke at "
+                "baseline (2018). (b) Incident stroke during follow-up, ascertainable "
+                "only among wave-6 survivors; mortality transitions are therefore not "
+                "estimable for incident stroke. Saturated points denote associations "
+                "whose 95% CI excludes 1. Transitions with no events are not shown "
+                "(not estimable)."),
+     "w": 600, "h": 298},
     {"path": os.path.join(SUB, "figures", "fig4_5yr_probabilities.png"),
      "legend": ("Figure 4. Five-year transition probabilities from the time-homogeneous Markov "
                 "model (left bar of each pair) vs directly observed 2018\u2192W6 proportions "
