@@ -136,7 +136,7 @@ for ax, (letter, cov, title, col) in zip(axes, panels):
 fig.suptitle("Associations of stroke with cognitive-state transitions, by baseline state",
              fontsize=10.5, y=1.00)
 fig.tight_layout(rect=[0, 0, 1, 0.96])
-save_pub(fig, "fig3_forest_stroke", multi=True)
+save_pub(fig, "fig4_forest_stroke", multi=True)
 
 # ============ Figure 4: 5-year probabilities vs observed (multi-panel) ============
 states = ["Normal", "CIND", "Dementia", "Death"]
@@ -167,7 +167,7 @@ fig.legend(handles, states, ncol=4, loc="lower center", fontsize=9)
 fig.suptitle("Five-year transition probabilities (time-homogeneous model) vs observed proportions",
              fontsize=10.5, y=0.99)
 fig.tight_layout(rect=[0, 0.08, 1, 0.94])
-save_pub(fig, "fig4_5yr_probabilities", multi=True)
+save_pub(fig, "fig3_5yr_probabilities", multi=True)
 
 # ============ Supplementary Figure S1: GOF (redrawn in Python from exported data) ============
 g = pd.read_csv(os.path.join(OUT, "gof_data.csv"))

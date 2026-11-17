@@ -105,28 +105,29 @@ main["figures"] = [
                 "(n = 8,178); multiple-imputation sensitivity used the full panel."),
      "w": 480, "h": 400},
     {"path": os.path.join(SUB, "figures", "fig2_transition_diagram.png"),
-     "legend": ("Figure 2. Annual transition intensities (per person-year) between cognitive "
-                "states and death, continuous-time Markov model, CHARLS 2018\u20132021/23 "
-                "(full analysis panel, n = 9,679)."),
+     "legend": ("Figure 2. Annual transition intensities between cognitive states and death. "
+                "Intensities per person-year from the continuous-time Markov model, CHARLS "
+                "2018\u20132021/23 (full analysis panel, n = 9,679)."),
      "w": 520, "h": 349},
-    {"path": os.path.join(SUB, "figures", "fig3_forest_stroke.png"),
-     "legend": ("Figure 3. Adjusted relative risk ratios (RRRs) for stroke on each "
-                "cognitive-state transition, from baseline-state-stratified multinomial "
-                "models (complete-case sample, n = 8,178). (a) Prevalent stroke at "
-                "baseline (2018). (b) Incident stroke during follow-up, ascertainable "
-                "only among wave-6 survivors; mortality transitions are therefore not "
-                "estimable for incident stroke. Saturated points denote associations "
-                "whose 95% CI excludes 1. Transitions with no events are not shown "
-                "(not estimable)."),
-     "w": 600, "h": 298},
-    {"path": os.path.join(SUB, "figures", "fig4_5yr_probabilities.png"),
-     "legend": ("Figure 4. Five-year transition probabilities from the time-homogeneous Markov "
+    {"path": os.path.join(SUB, "figures", "fig3_5yr_probabilities.png"),
+     "legend": ("Figure 3. Five-year transition probabilities vs observed proportions. "
+                "Five-year transition probabilities from the time-homogeneous Markov "
                 "model (left bar of each pair) vs directly observed 2018\u2192W6 proportions "
                 "(right bar, lighter shading), by baseline state. Modelled probabilities extrapolate to a "
                 "full 5-year horizon; observed proportions cover a shorter window (W6 interviews "
                 "at 3.3\u20135.6 years) and are based on 4,839 (Normal), 4,027 (CIND) and 813 "
                 "(Dementia) participants."),
      "w": 600, "h": 272},
+    {"path": os.path.join(SUB, "figures", "fig4_forest_stroke.png"),
+     "legend": ("Figure 4. Adjusted relative risk ratios for stroke on cognitive-state transitions. "
+                "RRRs from baseline-state-stratified multinomial "
+                "models (complete-case sample, n = 8,178). (a) Prevalent stroke at "
+                "baseline (2018). (b) Incident stroke during follow-up, ascertainable "
+                "only among wave-6 survivors; mortality transitions are therefore not "
+                "estimable for incident stroke. Saturated points denote associations "
+                "whose 95% CI excludes 1. Transitions with complete separation are not shown "
+                "(not estimable)."),
+     "w": 600, "h": 298},
 ]
 with open(os.path.join(SUB, "content_main.json"), "w", encoding="utf-8") as f:
     json.dump(main, f, ensure_ascii=False, indent=1)
