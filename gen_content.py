@@ -43,7 +43,7 @@ def read_csv(path):
         return list(csv.reader(f))
 
 # ---------- main manuscript ----------
-main = {"title": ("Cognitive state transitions and the stage-dependent role of stroke "
+main = {"title": ("Cognitive state transitions and stage-graded stroke associations "
                   "in older Chinese adults: a multi-state analysis of CHARLS "
                   "2018\u20132023"),
         "running": "Cognitive state transitions and stroke in CHARLS",
@@ -124,7 +124,8 @@ main["figures"] = [
                 "model (left bar of each pair) vs directly observed 2018\u2192W6 proportions "
                 "(right bar, lighter shading), by baseline state. Modelled probabilities extrapolate to a "
                 "full 5-year horizon; observed proportions cover a shorter window (W6 interviews "
-                "at 3.3\u20135.6 years)."),
+                "at 3.3\u20135.6 years) and are based on 4,839 (Normal), 4,027 (CIND) and 813 "
+                "(Dementia) participants."),
      "w": 600, "h": 272},
 ]
 with open(os.path.join(SUB, "content_main.json"), "w", encoding="utf-8") as f:

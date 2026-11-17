@@ -78,8 +78,8 @@ doc = Document()
 set_font(doc.styles["Normal"], 10.5)
 doc.add_heading("STROBE Statement - Checklist of items (cohort study)", level=1)
 p = doc.add_paragraph()
-p.add_run("Manuscript: " + "Cognitive state transitions and the stage-dependent role of "
-          "stroke in older Chinese adults: a multi-state analysis of CHARLS "
+p.add_run("Manuscript: " + "Cognitive state transitions and stage-graded stroke "
+          "associations in older Chinese adults: a multi-state analysis of CHARLS "
           "2018\u20132023").italic = True
 tbl = doc.add_table(rows=1, cols=3)
 tbl.style = "Table Grid"

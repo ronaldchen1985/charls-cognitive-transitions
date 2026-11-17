@@ -152,7 +152,7 @@ for ax, base in zip(axes, ["Normal", "CIND", "Dementia"]):
         for v, c in zip(vals, colors):
             ax.bar(j, v, bottom=left, color=c, width=0.62, edgecolor="none",
                    lw=0, alpha=1.0 if j == 0 else 0.55)
-            if v >= 4:
+            if v > 4:
                 ax.text(j, left + v/2, f"{v:.0f}", ha="center", va="center",
                         fontsize=7.5, color="white", fontweight="bold")
             left += v
