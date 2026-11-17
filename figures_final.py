@@ -74,27 +74,32 @@ ax.text(5.0, 0.6, "Multi-state model fitted on n = 9,679; multinomial models on 
 save_pub(fig, "fig1_flowchart")
 
 # ============ Figure 2: transition diagram ============
-fig, ax = plt.subplots(figsize=(7.0, 4.7))
-pos = {"Normal": (0.12, 0.75), "CIND": (0.62, 0.75), "Dementia": (0.62, 0.25), "Death": (0.12, 0.25)}
+fig, ax = plt.subplots(figsize=(7.4, 5.0))
+pos = {"Normal": (0.13, 0.76), "CIND": (0.87, 0.76), "Dementia": (0.87, 0.24), "Death": (0.13, 0.24)}
 for k, (x, y) in pos.items():
-    ax.add_patch(plt.Circle((x, y), 0.085, color=C[k], alpha=0.9, zorder=3))
+    ax.add_patch(plt.Circle((x, y), 0.082, color=C[k], alpha=0.92, zorder=3))
     ax.text(x, y, k, ha="center", va="center", color="white", fontsize=11,
             fontweight="bold", zorder=4)
-def arrow(p1, p2, lab, rad=0.0, lx=None, ly=None):
+def arrow(p1, p2, lab, rad=0.0, side=1, extra=0.05):
     ax.annotate("", xy=p2, xytext=p1,
                 arrowprops=dict(arrowstyle="-|>", color="k", lw=1.2,
-                                connectionstyle=f"arc3,rad={rad}", shrinkA=38, shrinkB=38))
-    mx, my = (p1[0]+p2[0])/2 + (lx or 0), (p1[1]+p2[1])/2 + (ly or 0)
-    ax.text(mx, my, lab, fontsize=9, ha="center", color="#1B2631")
-arrow(pos["Normal"], pos["CIND"], "0.248", rad=-0.15, lx=-0.07, ly=0.075)
-arrow(pos["CIND"], pos["Normal"], "0.398", rad=-0.15, lx=-0.14, ly=-0.105)
-arrow(pos["Normal"], pos["Dementia"], "0.001", rad=-0.25, lx=-0.155, ly=0.10)
-arrow(pos["CIND"], pos["Dementia"], "0.086", rad=0.0, lx=0.075, ly=0.035)
-arrow(pos["Dementia"], pos["CIND"], "0.320", rad=-0.3, lx=0.115, ly=-0.045)
-arrow(pos["Normal"], pos["Death"], "0.019", rad=0.0, lx=-0.075)
-arrow(pos["CIND"], pos["Death"], "0.025", rad=0.25, lx=0.10, ly=0.16)
-arrow(pos["Dementia"], pos["Death"], "0.247", rad=-0.25, lx=-0.13, ly=-0.115)
-ax.set_xlim(-0.02, 0.85); ax.set_ylim(0.08, 0.95); ax.axis("off")
+                                connectionstyle=f"arc3,rad={rad}", shrinkA=34, shrinkB=34))
+    d = np.array([p2[0]-p1[0], p2[1]-p1[1]]); L = np.hypot(*d)
+    n = np.array([d[1], -d[0]]) / L            # right unit normal (= arc3 bulge side for rad>0)
+    mx, my = (p1[0]+p2[0])/2, (p1[1]+p2[1])/2
+    off = rad * L / 2 + np.sign(rad) * extra if rad != 0 else side * extra
+    lx, ly = mx + n[0]*off, my + n[1]*off
+    ax.text(lx, ly, lab, fontsize=9.5, ha="center", va="center", color="#1B2631",
+            zorder=5, bbox=dict(fc="white", ec="#D5DBDB", lw=0.4, alpha=0.9, pad=1.6))
+arrow(pos["Normal"], pos["CIND"], "0.248", rad=-0.28)     # bulge up, label above
+arrow(pos["CIND"], pos["Normal"], "0.398", rad=-0.28)     # bulge down, label below
+arrow(pos["CIND"], pos["Dementia"], "0.086", rad=-0.28)   # bulge right, label right
+arrow(pos["Dementia"], pos["CIND"], "0.320", rad=-0.28)   # bulge left, label left
+arrow(pos["Normal"], pos["Death"], "0.019", side=1)       # straight, label outside (left)
+arrow(pos["Dementia"], pos["Death"], "0.247", side=-1)    # straight, label below
+arrow(pos["Normal"], pos["Dementia"], "0.001", rad=0.32)  # bulge toward lower-left
+arrow(pos["CIND"], pos["Death"], "0.025", rad=0.32)       # bulge toward upper-left
+ax.set_xlim(-0.04, 1.06); ax.set_ylim(0.06, 0.96); ax.axis("off")
 ax.set_title("Annual transition intensities (per person-year), CHARLS 2018\u20132023", fontsize=11)
 save_pub(fig, "fig2_transition_diagram")
 
